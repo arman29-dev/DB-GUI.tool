@@ -1,5 +1,5 @@
 import { Database, Terminal, Table, LogOut } from 'lucide-react'
-import './Header.css'
+import '../styles/Header.css'
 
 export default function Header({ filename, view, setView, onDisconnect }) {
   return (

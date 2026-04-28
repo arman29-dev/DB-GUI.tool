@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
 import { Plus, Trash2, Pencil, Search, RefreshCw, ChevronLeft, ChevronRight, Check, X, Key, Link } from 'lucide-react'
-import './TableView.css'
+import '../styles/TableView.css'
 
 const NULL_SENTINEL = '__NULL__'
 

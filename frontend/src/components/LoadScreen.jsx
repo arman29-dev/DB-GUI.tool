@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react'
 import { Database, FolderOpen, Upload, AlertCircle } from 'lucide-react'
-import './LoadScreen.css'
+import '../styles/LoadScreen.css'
 
 export default function LoadScreen({ onLoad }) {
   const [pathInput, setPathInput] = useState('')

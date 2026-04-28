@@ -1,5 +1,5 @@
 import { Table2, Eye } from 'lucide-react'
-import './Sidebar.css'
+import '../styles/Sidebar.css'
 
 export default function Sidebar({ tables, activeTable, setActiveTable }) {
   return (

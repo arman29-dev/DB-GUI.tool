@@ -4,7 +4,7 @@ import TableView from './components/TableView.jsx'
 import QueryEditor from './components/QueryEditor.jsx'
 import LoadScreen from './components/LoadScreen.jsx'
 import Header from './components/Header.jsx'
-import './App.css'
+import './styles/App.css'
 
 const API = ''
 

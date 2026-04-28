@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Play, Copy, Check, AlertCircle, Terminal } from 'lucide-react'
-import './QueryEditor.css'
+import '../styles/QueryEditor.css'
 
 const EXAMPLES = [
   'SELECT * FROM sqlite_master WHERE type="table"',
