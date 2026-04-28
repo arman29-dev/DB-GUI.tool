@@ -1,6 +1,6 @@
 # DB Reader
 
-A browser-based interface for developers to visualize and perform CRUD operations on local `.db` / `.sqlite` files — no CLI tools needed.
+A browser-based interface for developers to visualize and perform CRUD operations on local `.db` / `.sqlite` files — no CLI tools needed. Future tools add MySQL and Postgres connectins too.
 
 ## Tech Stack
 
