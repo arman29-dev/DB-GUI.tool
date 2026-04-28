@@ -10,17 +10,11 @@ echo ""
 echo "  [1/2] Setting up Python backend..."
 cd backend
 
-if [ ! -d ".venv" ]; then
-  python3 -m venv .venv
-  echo "        Created virtual environment"
-fi
-
-source .venv/bin/activate
-pip install -r requirements.txt -q
+uv sync -q
 echo "        Dependencies installed ✓"
 
 # Start backend in background
-uvicorn main:app --reload --port 8000 &
+uv run uvicorn main:app --reload --port 8000 &
 BACKEND_PID=$!
 echo "        Backend running at http://localhost:8000 (PID: $BACKEND_PID)"
 
