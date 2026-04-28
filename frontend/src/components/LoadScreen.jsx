@@ -37,7 +37,7 @@ export default function LoadScreen({ onLoad }) {
       const res = await fetch('/api/upload', { method: 'POST', body: form })
       const d = await res.json()
       if (!res.ok) throw new Error(d.detail || 'Upload failed')
-      onLoad(d.path, d.filename)
+      onLoad(d.path, d.filename, true)
     } catch (e) {
       setError(e.message)
     } finally {

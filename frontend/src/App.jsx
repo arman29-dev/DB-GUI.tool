@@ -12,6 +12,7 @@ export default function App() {
   const [dbLoaded, setDbLoaded] = useState(false)
   const [dbPath, setDbPath] = useState(null)
   const [dbFilename, setDbFilename] = useState(null)
+  const [isUploaded, setIsUploaded] = useState(false)
   const [tables, setTables] = useState([])
   const [activeTable, setActiveTable] = useState(null)
   const [view, setView] = useState('table') // 'table' | 'query'
@@ -38,9 +39,10 @@ export default function App() {
     }
   }
 
-  const handleLoad = async (path, filename) => {
+  const handleLoad = async (path, filename, uploaded = false) => {
     setDbPath(path)
     setDbFilename(filename)
+    setIsUploaded(uploaded)
     setDbLoaded(true)
     setActiveTable(null)
     setView('table')
@@ -52,6 +54,7 @@ export default function App() {
     setDbLoaded(false)
     setDbPath(null)
     setDbFilename(null)
+    setIsUploaded(false)
     setTables([])
     setActiveTable(null)
   }
@@ -67,6 +70,7 @@ export default function App() {
         view={view}
         setView={setView}
         onDisconnect={handleDisconnect}
+        isUploaded={isUploaded}
       />
       <div className="app-body">
         <Sidebar

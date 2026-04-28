@@ -78,6 +78,21 @@
 
 .header-right { display: flex; align-items: center; flex: 1; justify-content: flex-end; }
 
+.btn-download {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-3);
+  background: transparent;
+  font-size: 12px;
+  padding: 5px 10px;
+  border-radius: var(--radius);
+  transition: all 0.15s;
+}
+.btn-download:hover {
+  color: var(--accent);
+  background: var(--accent-dim, rgba(99,102,241,0.1));
+}
 .btn-disconnect {
   display: flex;
   align-items: center;

@@ -5,7 +5,6 @@ from typing import Any, Optional
 import sqlite3
 import os
 import json
-import uuid
 
 app = FastAPI(title="DB Reader API", version="1.0.0")
 
@@ -18,7 +17,7 @@ app.add_middleware(
 )
 
 # In-memory store of the currently loaded DB path
-state = {"db_path": None}
+state = {"db_path": None, "upload_filename": None}
 
 
 def get_connection():
@@ -67,25 +66,31 @@ async def upload_db(file: UploadFile = File(...)):
         raise HTTPException(status_code=400, detail="Only .db / .sqlite / .sqlite3 files are supported.")
     upload_dir = "/tmp/db_reader_uploads"
     os.makedirs(upload_dir, exist_ok=True)
-    unique_name = f"{uuid.uuid4().hex}_{file.filename}"
-    dest = os.path.join(upload_dir, unique_name)
+    dest = os.path.join(upload_dir, file.filename)
     contents = await file.read()
     with open(dest, "wb") as f:
         f.write(contents)
     state["db_path"] = dest
+    state["upload_filename"] = file.filename
     return {"success": True, "path": dest, "filename": file.filename}
 
 
 @app.post("/api/disconnect")
 def disconnect():
-    path = state["db_path"]
-    if path and path.startswith("/tmp/db_reader_uploads/"):
-        try:
-            os.remove(path)
-        except OSError:
-            pass
     state["db_path"] = None
+    state["upload_filename"] = None
     return {"success": True}
+
+
+@app.get("/api/download")
+def download_db():
+    from fastapi.responses import FileResponse
+    if not state["db_path"]:
+        raise HTTPException(status_code=400, detail="No database loaded.")
+    if not os.path.exists(state["db_path"]):
+        raise HTTPException(status_code=404, detail="Database file not found.")
+    filename = state.get("upload_filename") or os.path.basename(state["db_path"])
+    return FileResponse(state["db_path"], media_type="application/octet-stream", filename=filename)
 
 
 # ── Schema / Table metadata ───────────────────────────────────────────────────

@@ -1,7 +1,11 @@
-import { Database, Terminal, Table, LogOut } from 'lucide-react'
+import { Database, Terminal, Table, LogOut, Download } from 'lucide-react'
 import '../styles/Header.css'
 
-export default function Header({ filename, view, setView, onDisconnect }) {
+export default function Header({ filename, view, setView, onDisconnect, isUploaded }) {
+  const handleDownload = () => {
+    window.location.href = '/api/download'
+  }
+
   return (
     <header className="header">
       <div className="header-left">
@@ -31,6 +35,12 @@ export default function Header({ filename, view, setView, onDisconnect }) {
       </nav>
 
       <div className="header-right">
+        {isUploaded && (
+          <button className="btn-download" onClick={handleDownload} title="Download modified DB">
+            <Download size={13} />
+            Download
+          </button>
+        )}
         <button className="btn-disconnect" onClick={onDisconnect}>
           <LogOut size={13} />
           Disconnect
