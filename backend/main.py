@@ -5,6 +5,7 @@ from typing import Any, Optional
 import sqlite3
 import os
 import json
+import uuid
 
 app = FastAPI(title="DB Reader API", version="1.0.0")
 
@@ -66,7 +67,8 @@ async def upload_db(file: UploadFile = File(...)):
         raise HTTPException(status_code=400, detail="Only .db / .sqlite / .sqlite3 files are supported.")
     upload_dir = "/tmp/db_reader_uploads"
     os.makedirs(upload_dir, exist_ok=True)
-    dest = os.path.join(upload_dir, file.filename)
+    unique_name = f"{uuid.uuid4().hex}_{file.filename}"
+    dest = os.path.join(upload_dir, unique_name)
     contents = await file.read()
     with open(dest, "wb") as f:
         f.write(contents)
@@ -76,6 +78,12 @@ async def upload_db(file: UploadFile = File(...)):
 
 @app.post("/api/disconnect")
 def disconnect():
+    path = state["db_path"]
+    if path and path.startswith("/tmp/db_reader_uploads/"):
+        try:
+            os.remove(path)
+        except OSError:
+            pass
     state["db_path"] = None
     return {"success": True}
 
